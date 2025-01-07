@@ -1,1 +1,1 @@
-### Команда для запуска видео потока `gst-launch-1.0 filesrc location=/home/user/test_example/front/drift_rx7.mp4 ! decodebin ! queue ! videoconvert ! jpegenc ! queue ! multipartmux ! udpsink host=127.0.0.1 port=8554`
+### Команда для запуска видео потока `gst-launch-1.0 filesrc location=/home/user/test_example/front/drift_rx7.mp4 ! decodebin ! queue ! videoconvert ! jpegenc ! queue ! rtpjpegpay ! udpsink host=127.0.0.1 port=8554`

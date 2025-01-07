@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     QMediaPlayer *watch=new QMediaPlayer();
     QVideoWidget *video=new QVideoWidget();
     watch->setVideoOutput(video);
-    watch->setMedia(QUrl("gst-pipeline: udpsrc port=8554 ! multipartdemux ! jpegparse ! jpegdec ! videoconvert ! ximagesink sync=true name=\"qtvideosink\""));
+    watch->setMedia(QUrl("gst-pipeline: udpsrc port=8554 caps=\"application/x-rtp,encoding-name=JPEG,payload=26\" ! rtpjpegdepay ! jpegparse ! queue max-size-time=0 max-size-buffers=0 ! jpegdec ! ximagesink name=\"qtvideosink\""));
     watch->play();
     gridPlayer->addWidget(video,0,0);
     video->show();
