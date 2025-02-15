@@ -19,7 +19,6 @@ endif ()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-
 add_executable(${PROJECT_NAME} main.cc)
 
 # ##############################################################################
@@ -30,7 +29,7 @@ add_executable(${PROJECT_NAME} main.cc)
 #
 # and comment out the following lines
 find_package(Drogon CONFIG REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE Drogon::Drogon)
+target_link_libraries(${PROJECT_NAME} PRIVATE Drogon::Drogon zip)
 # ##############################################################################
 
 if (CMAKE_CXX_STANDARD LESS 17)

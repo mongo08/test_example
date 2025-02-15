@@ -9,6 +9,10 @@ add_executable(${PROJECT_NAME} test_main.cc)
 # target_link_libraries(${PROJECT_NAME} PRIVATE drogon)
 #
 # and comment out the following lines
-target_link_libraries(${PROJECT_NAME} PRIVATE Drogon::Drogon)
+set(SOURCES ../controllers/unzip_util.cpp)
+add_library(connector STATIC ${SOURCES})
+
+target_link_libraries(${PROJECT_NAME} PRIVATE Drogon::Drogon connector zip)
+
 
 ParseAndAddDrogonTests(${PROJECT_NAME})
