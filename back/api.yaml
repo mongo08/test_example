@@ -1,0 +1,39 @@
+asyncapi: 2.6.0
+info:
+  title: Chat Application
+  version: '1.0.0'
+  description: A simple chat application using WebSocket
+
+servers:
+  production:
+    url: ws://localhost
+    protocol: ws
+    description: сервер для рисование графиков
+
+channels:
+  graphics:
+    subscribe:
+      operationId: receiveMessage
+      description: Принимаемое сообщение от клиента
+      message:
+        $ref: '#/components/messages/Start'
+    publish:
+      operationId: sendMessage
+      description: Отправляемое сообщение от сервера
+      message:
+        $ref: '#/components/messages/Message'
+
+components:
+  messages:
+    Message:
+      payload:
+        type: object
+        properties:
+          x_axis:
+            type: integer
+          y_axis:
+            type: integer
+    Start:
+      payload:
+        type: string
+        
