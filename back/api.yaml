@@ -1,39 +1,60 @@
-asyncapi: 2.6.0
+asyncapi: '3.0.0'
 info:
-  title: Chat Application
-  version: '1.0.0'
-  description: A simple chat application using WebSocket
-
+  title: Тестовое описание
+  version: '0.0.0'
+  description:  |
+    Сокет для рисования графиков
 servers:
   production:
-    url: ws://localhost
+    host: ws://localhost
     protocol: ws
-    description: сервер для рисование графиков
-
+    description: Сокет для рисования графиков
 channels:
-  graphics:
-    subscribe:
-      operationId: receiveMessage
-      description: Принимаемое сообщение от клиента
-      message:
-        $ref: '#/components/messages/Start'
-    publish:
-      operationId: sendMessage
-      description: Отправляемое сообщение от сервера
-      message:
-        $ref: '#/components/messages/Message'
-
+  root:
+    address: /graphics
+    messages:
+      hello:
+        $ref: '#/components/messages/hello'
+      reaction:
+        $ref: '#/components/messages/reaction'
+        
+operations:
+  helloListener:
+    action: receive
+    channel:
+      $ref: '#/channels/root'
+    messages:
+      - $ref: '#/channels/root/messages/hello'
+  reactionListener:
+    action: send
+    channel:
+      $ref: '#/channels/root'
+    messages:
+      - $ref: '#/channels/root/messages/reaction'
 components:
   messages:
-    Message:
+    reaction:
+      summary: Ответ от сервера
       payload:
-        type: object
-        properties:
-          x_axis:
-            type: integer
-          y_axis:
-            type: integer
-    Start:
+        $ref: '#/components/schemas/reaction'
+    hello:
+      summary: Старт обмена
       payload:
-        type: string
-        
+        $ref: '#/components/schemas/hello'
+  schemas:
+    hello:
+      type: object
+      properties:
+        type:
+          type: string
+          description: запуск обмена любое текстовое сообщение
+    
+    reaction:
+      type: object
+      properties:
+        x_axis:
+          type: integer
+          description: кординаты для оси X
+        Y_axis:
+          type: integer
+          description: ординаты для оси Y
